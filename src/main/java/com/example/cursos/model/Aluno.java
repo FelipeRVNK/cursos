@@ -2,6 +2,8 @@ package com.example.cursos.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Aluno {
@@ -13,10 +15,9 @@ public class Aluno {
     private String nome;
     private String email;
 
-    @ManyToOne
-    @JoinColumn(name = "curso_id")
+    @OneToMany(mappedBy = "aluno", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
-    private Curso curso;
+    private List<Matricula> matriculas = new ArrayList<>();
 
     public Aluno() {}
 
@@ -26,6 +27,6 @@ public class Aluno {
     public void setNome(String nome) { this.nome = nome; }
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
-    public Curso getCurso() { return curso; }
-    public void setCurso(Curso curso) { this.curso = curso; }
+    public List<Matricula> getMatriculas() { return matriculas; }
+    public void setMatriculas(List<Matricula> matriculas) { this.matriculas = matriculas; }
 }

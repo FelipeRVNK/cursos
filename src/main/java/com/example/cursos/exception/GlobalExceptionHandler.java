@@ -44,4 +44,14 @@ public class GlobalExceptionHandler {
                 "erro", "Erro interno do servidor"
         ));
     }
+
+    @ExceptionHandler(MatriculaDuplicadaException.class)
+    public ResponseEntity<Map<String, Object>> handleMatriculaDuplicada(MatriculaDuplicadaException ex) {
+        logger.error("Erro: {}", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(Map.of(
+                "timestamp", LocalDateTime.now().toString(),
+                "status", 409,
+                "erro", ex.getMessage()
+        ));
+    }
 }
