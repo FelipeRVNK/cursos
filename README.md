@@ -4,7 +4,7 @@ API REST desenvolvida em Java com Spring Boot para gerenciamento de cursos e mat
 
 ## Membros
 
-- Felipe RVNK
+- Felipe Diffonte Schmidt
 - Gustavo Cotovicz
 
 ## Tecnologias
