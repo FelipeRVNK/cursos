@@ -74,32 +74,8 @@ O endpoint `GET /cursos` aceita os seguintes query params:
 Exemplo combinado:
 GET /cursos?categoria=backend&ordenar=nome
 
-## Estrutura do projeto
-src/main/java/com/example/cursos/
-├── config/
-│   └── SecurityConfig.java
-├── controller/
-│   ├── AuthController.java
-│   ├── AlunoController.java
-│   └── CursoController.java
-├── exception/
-│   ├── AlunoNaoEncontradoException.java
-│   ├── CursoNaoEncontradoException.java
-│   ├── MatriculaDuplicadaException.java
-│   └── GlobalExceptionHandler.java
-├── model/
-│   ├── Aluno.java
-│   ├── Curso.java
-│   └── Matricula.java
-├── repository/
-│   ├── AlunoRepository.java
-│   ├── CursoRepository.java
-│   └── MatriculaRepository.java
-└── security/
-├── CustomUserDetailsService.java
-├── JwtFilter.java
-└── JwtUtil.java
 
 ## Vídeo
 
-🎥 [Link do vídeo de apresentação]()
+ [[Link do vídeo de apresentação](https://youtu.be/ZYSJ3_iGJ5U)]
+ 
