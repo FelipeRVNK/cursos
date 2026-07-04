@@ -5,6 +5,7 @@ import com.example.cursos.model.Aluno;
 import com.example.cursos.model.Matricula;
 import com.example.cursos.repository.AlunoRepository;
 import com.example.cursos.repository.MatriculaRepository;
+import com.example.cursos.service.AvatarService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,10 @@ public class AlunoController {
 
     @Autowired
     private MatriculaRepository matriculaRepository;
+
+    // Injetando o serviço de avatar que criamos
+    @Autowired
+    private AvatarService avatarService;
 
     @GetMapping
     public List<Aluno> listar() {
@@ -72,5 +77,40 @@ public class AlunoController {
         alunoRepository.findById(id)
                 .orElseThrow(() -> new AlunoNaoEncontradoException(id));
         return matriculaRepository.findByAlunoId(id);
+    }
+
+    @PostMapping("/{id}/avatar")
+    public ResponseEntity<Aluno> gerarAvatar(@PathVariable Long id) {
+        logger.info("Iniciando geração de avatar para o aluno id={}", id);
+
+        Aluno aluno = alunoRepository.findById(id)
+                .orElseThrow(() -> new AlunoNaoEncontradoException(id));
+
+        String urlS3 = avatarService.gerarESalvarAvatar(aluno.getEmail(), aluno.getNome());
+
+        if (urlS3 != null) {
+            aluno.setAvatarUrl(urlS3);
+            alunoRepository.save(aluno);
+            return ResponseEntity.ok(aluno);
+        }
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    }
+
+    @DeleteMapping("/{id}/avatar")
+    public ResponseEntity<Void> deletarAvatar(@PathVariable Long id) {
+        logger.info("Iniciando exclusão do avatar para o aluno id={}", id);
+
+        Aluno aluno = alunoRepository.findById(id)
+                .orElseThrow(() -> new AlunoNaoEncontradoException(id));
+
+        if (aluno.getAvatarUrl() != null) {
+            avatarService.deletarAvatar(aluno.getAvatarUrl());
+
+            aluno.setAvatarUrl(null);
+            alunoRepository.save(aluno);
+        }
+
+        return ResponseEntity.noContent().build();
     }
 }
