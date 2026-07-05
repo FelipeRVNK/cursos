@@ -21,8 +21,10 @@ public class Matricula {
     private Curso curso;
 
     private LocalDate dataMatricula = LocalDate.now();
-
     private String status = "ATIVA";
+
+    // usuário do AuthServer que realizou a matrícula
+    private String usuarioId;
 
     public Matricula() {}
 
@@ -36,4 +38,6 @@ public class Matricula {
     public void setDataMatricula(LocalDate dataMatricula) { this.dataMatricula = dataMatricula; }
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+    public String getUsuarioId() { return usuarioId; }
+    public void setUsuarioId(String usuarioId) { this.usuarioId = usuarioId; }
 }

@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import java.util.Comparator;
 import java.util.List;
 
@@ -105,6 +107,30 @@ public class CursoController {
         return alunoRepository.findByCursoId(id);
     }
 
+//    @PostMapping("/{cursoId}/alunos/{alunoId}")
+//    public ResponseEntity<Matricula> matricularAluno(
+//            @PathVariable Long cursoId,
+//            @PathVariable Long alunoId) {
+//
+//        logger.info("Matriculando aluno id={} no curso id={}", alunoId, cursoId);
+//
+//        Curso curso = cursoRepository.findById(cursoId)
+//                .orElseThrow(() -> new CursoNaoEncontradoException(cursoId));
+//
+//        Aluno aluno = alunoRepository.findById(alunoId)
+//                .orElseThrow(() -> new AlunoNaoEncontradoException(alunoId));
+//
+//        if (matriculaRepository.existsByAlunoIdAndCursoId(alunoId, cursoId)) {
+//            throw new MatriculaDuplicadaException(alunoId, cursoId);
+//        }
+//
+//        Matricula matricula = new Matricula();
+//        matricula.setAluno(aluno);
+//        matricula.setCurso(curso);
+//
+//        return ResponseEntity.status(HttpStatus.CREATED).body(matriculaRepository.save(matricula));
+//    }
+
     @PostMapping("/{cursoId}/alunos/{alunoId}")
     public ResponseEntity<Matricula> matricularAluno(
             @PathVariable Long cursoId,
@@ -122,11 +148,17 @@ public class CursoController {
             throw new MatriculaDuplicadaException(alunoId, cursoId);
         }
 
+        // pega o usuário autenticado via token
+        String usuarioId = SecurityContextHolder.getContext()
+                .getAuthentication().getName();
+
         Matricula matricula = new Matricula();
         matricula.setAluno(aluno);
         matricula.setCurso(curso);
+        matricula.setUsuarioId(usuarioId);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(matriculaRepository.save(matricula));
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(matriculaRepository.save(matricula));
     }
 
     @DeleteMapping("/{cursoId}/alunos/{alunoId}")
