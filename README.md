@@ -15,7 +15,10 @@ API REST desenvolvida em Java com Spring Boot para gerenciamento de cursos e mat
 - Spring Data JPA
 - H2 Database (em memória)
 - Maven
+- AWS SDK (S3 e SQS)
 
+
+**Importante:** Para as rotas de Avatar e mensageria funcionarem, é necessário configurar as variáveis de ambiente `AWS_ACCESS_KEY` e `AWS_SECRET_KEY` antes de iniciar a aplicação.
 ## Como executar
 
 ```bash
@@ -53,13 +56,15 @@ Use o token retornado no header `Authorization: Bearer <token>` nas rotas proteg
 ### Alunos
 
 | Método | Rota | Descrição | Autenticação |
-|--------|------|-----------|--------------|
+|--------|------|-----------|-----|
 | GET | /alunos | Lista todos os alunos | Não |
 | GET | /alunos/{id} | Busca aluno por ID | Não |
 | POST | /alunos | Cria aluno | Não |
 | PUT | /alunos/{id} | Atualiza aluno | Sim |
 | DELETE | /alunos/{id} | Remove aluno | Sim |
 | GET | /alunos/{id}/cursos | Lista cursos do aluno | Não |
+| POST | /alunos/{id}/avatar | Gera avatar e salva na AWS S3 | Não |
+| DELETE | /alunos/{id}/avatar | Remove o avatar da AWS S3 | Não |
 
 ## Filtros e ordenação
 
@@ -77,5 +82,5 @@ GET /cursos?categoria=backend&ordenar=nome
 
 ## Vídeo
 
- [[Link do vídeo de apresentação](https://youtu.be/ZYSJ3_iGJ5U)]
+ [[Link do vídeo de apresentação](https://youtu.be/VphL9gQsIbc)]
  
