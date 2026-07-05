@@ -1,6 +1,10 @@
 # Sistema de Gerenciamento de Cursos
-
 API REST desenvolvida em Java com Spring Boot para gerenciamento de cursos e matrículas de alunos.
+
+## Vídeo
+
+ [[Link do vídeo de apresentação](https://youtu.be/VphL9gQsIbc)]
+
 
 ## Membros
 
@@ -80,7 +84,4 @@ Exemplo combinado:
 GET /cursos?categoria=backend&ordenar=nome
 
 
-## Vídeo
-
- [[Link do vídeo de apresentação](https://youtu.be/VphL9gQsIbc)]
  
